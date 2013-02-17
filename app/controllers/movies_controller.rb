@@ -3,6 +3,8 @@
 class MoviesController < ApplicationController
   def index
 		@sort = params[:sort_param]
+		@title_header_class = ('hilite' if @sort == "title")
+		@release_date_class = ('hilite' if @sort == "release_date")
     @movies = Movie.order(params[:sort_param])
   end
 
