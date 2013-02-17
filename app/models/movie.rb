@@ -3,8 +3,8 @@ class Movie < ActiveRecord::Base
 	def Movie.ratings 
 		movie_list = Movie.all
 		ratings = []
-		ratings << movie_list.each {|mov| mov.rating}
-		ratings = ratings.uniq
+		movie_list.each {|mov| ratings << mov.rating}
+		ratings = ratings.uniq.sort
 	end
 end
 
