@@ -4,7 +4,7 @@
 %table#movies
   %thead
     %tr
-      %th{:class => @title_header_class} <a id="title_header" href="#{movies_path(sort_param: "title")}>Movie Title</a>
+      %th{:class => @title_header_class} <a id="title_header" href="#{movies_path(sort_param: "title")}">Movie Title</a>
       %th Rating
       %th{:class => @release_date_class}= link_to 'Release Date', movies_path(sort_param: "release_date"), :id => "release_date_header"
       %th More Info
