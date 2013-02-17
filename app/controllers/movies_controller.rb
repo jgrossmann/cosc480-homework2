@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
 		@sort = params[:sort_param]
 		@title_header_class = ('hilite' if @sort == "title")
 		@release_date_class = ('hilite' if @sort == "release_date")
+		@all_ratings = Movie.ratings
     @movies = Movie.order(params[:sort_param])
   end
 

@@ -2,6 +2,12 @@
 %h1 All Movies
 
 %table#movies
+	= form_tag movies_path; :method => :get do
+		Include:
+		- @all_ratings.each do |rating|
+			= rating
+			= check_box_tag "ratings[#{rating}]"
+		= submit_tag 'Refresh'
   %thead
     %tr
       %th{:class => @title_header_class} <a id="title_header" href="#{movies_path(sort_param: "title")}">Movie Title</a>
