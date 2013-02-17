@@ -4,7 +4,7 @@
 %table#movies
   %thead
     %tr
-      %th <a id="title_header" href=movies_path(sort_param: "title")>Movie Title</a>
+      %th#title_header= link_to 'Movie Title', movies_path(sort_param: "title")
       %th Rating
       %th Release Date
       %th More Info
