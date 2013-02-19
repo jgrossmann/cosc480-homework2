@@ -2,11 +2,18 @@
 
 class MoviesController < ApplicationController
   def index
-		@sort = params[:sort_param]
+		@all_ratings = Movie.ratings
+		if @select_ratings == nil
+			@select_ratings = @all_ratings
+		end
+		if params[:ratings] != session[:ratings]
+			session[:ratings] = @select_ratings
+		end
+		@sort = params[:sort_param] unless (params[:sort_param] == nil)
+		@select_ratings = params[:ratings].keys unless params[:ratings] == nil
 		@title_header_class = ('hilite' if @sort == "title")
 		@release_date_class = ('hilite' if @sort == "release_date")
-		@all_ratings = Movie.ratings
-    @movies = Movie.order(params[:sort_param])
+    @movies = Movie.find_all_by_rating(@select_ratings, :order => @sort)
   end
 
   def show

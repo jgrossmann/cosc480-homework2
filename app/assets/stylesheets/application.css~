@@ -1,3 +1,6 @@
+#banner {
+	text-decoration: none;
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -44,7 +47,7 @@ table#movies th {
   font-weight: bold;
   background-color: wheat;
 }
-table#movies th#title_header.hilite {
+table#movies th.hilite {
   background-color: yellow;
 }
 table#movies th, table#movies td {
