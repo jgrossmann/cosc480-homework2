@@ -7,12 +7,12 @@ class MoviesController < ApplicationController
 	
 	#session for ratings
 		if !params.has_key?("ratings")
-			redir = true
-			if session.has_key?(:ratings) && !params.has_key?(:home) #home parameter is to go to default movies home page (click on rotten potatoes title)
+			if session.has_key?(:ratings)
+				redir = true
 				@select_ratings_hash = session[:ratings]
 			end
 			if !params.has_key?(:sort_param)
-				if session.has_key?("sort_param") && !params.has_key?(:home)
+				if session.has_key?("sort_param")
 				@sort = session[:sort_param]
 				end
 			else
