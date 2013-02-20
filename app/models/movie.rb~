@@ -1,10 +1,7 @@
 class Movie < ActiveRecord::Base
   attr_accessible :title, :rating, :description, :release_date
 	def Movie.ratings 
-		movie_list = Movie.all
-		ratings = []
-		movie_list.each {|mov| ratings << mov.rating}
-		ratings = ratings.uniq.sort
+		ratings = ['G','PG','PG-13','R','NC-17']
 	end
 end
 
