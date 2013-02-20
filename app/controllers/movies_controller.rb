@@ -19,6 +19,7 @@ class MoviesController < ApplicationController
 				session[:sort_param] = params[:sort_param]
 			end
 			if @select_ratings_hash == nil
+				redir = true
 				@select_ratings_hash = {}
 				@all_ratings.each do |val|
 					@select_ratings_hash.store(val, 1)
