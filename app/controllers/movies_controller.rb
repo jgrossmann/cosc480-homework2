@@ -3,17 +3,26 @@
 class MoviesController < ApplicationController
   def index
 		@all_ratings = Movie.ratings
-		if @select_ratings == nil
-			@select_ratings = @all_ratings
-		end
-		if params[:ratings] != session[:ratings]
-			session[:ratings] = @select_ratings
+		if !params.has_key?(:ratings)
+			redir = true
+			if @select_ratings_hash == nil
+				@select_ratings_hash = {}
+				@all_ratings.each do |val|
+					@select_ratings_hash.store(val, 1)
+				end
+			end
 		end
 		@sort = params[:sort_param] unless (params[:sort_param] == nil)
-		@select_ratings = params[:ratings].keys unless params[:ratings] == nil
 		@title_header_class = ('hilite' if @sort == "title")
 		@release_date_class = ('hilite' if @sort == "release_date")
-    @movies = Movie.find_all_by_rating(@select_ratings, :order => @sort)
+		if params[:ratings] != nil
+			@select_ratings_hash = params[:ratings]
+		end
+    @movies = Movie.find_all_by_rating(@select_ratings_hash.keys, :order => @sort)
+		if(redir)
+			redir = false
+			redirect_to :action => 'index', :ratings => @select_ratings_hash, :sort_param => @sort
+		end
   end
 
   def show

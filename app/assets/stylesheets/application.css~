@@ -1,5 +1,9 @@
 #banner {
 	text-decoration: none;
+	color: white;
+}
+#ratings_R {
+	color: orange;
 }
 html, body {
   margin: 0;
