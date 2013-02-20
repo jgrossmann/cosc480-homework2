@@ -2,27 +2,48 @@
 
 class MoviesController < ApplicationController
   def index
+		redir = false
 		@all_ratings = Movie.ratings
-		if !params.has_key?(:ratings)
+	
+	#session for ratings
+		if !params.has_key?("ratings")
 			redir = true
+			if session.has_key?(:ratings) && !params.has_key?(:home) #home parameter is to go to default movies home page (click on rotten potatoes title)
+				@select_ratings_hash = session[:ratings]
+			end
+			if !params.has_key?(:sort_param)
+				if session.has_key?("sort_param") && !params.has_key?(:home)
+				@sort = session[:sort_param]
+				end
+			else
+				session[:sort_param] = params[:sort_param]
+			end
 			if @select_ratings_hash == nil
 				@select_ratings_hash = {}
 				@all_ratings.each do |val|
 					@select_ratings_hash.store(val, 1)
 				end
 			end
+		else
+			session[:ratings] = params[:ratings]
+		end
+
+		if(redir)
+			flash.keep
+			redir = false
+			redirect_to movies_path(:ratings => @select_ratings_hash, :sort_param => @sort)
 		end
 		@sort = params[:sort_param] unless (params[:sort_param] == nil)
+		if @sort != "title" && @sort != "release_date"
+			@sort = nil
+		end
+		session[:sort_param] = @sort
 		@title_header_class = ('hilite' if @sort == "title")
 		@release_date_class = ('hilite' if @sort == "release_date")
 		if params[:ratings] != nil
 			@select_ratings_hash = params[:ratings]
 		end
     @movies = Movie.find_all_by_rating(@select_ratings_hash.keys, :order => @sort)
-		if(redir)
-			redir = false
-			redirect_to :action => 'index', :ratings => @select_ratings_hash, :sort_param => @sort
-		end
   end
 
   def show
